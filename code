@@ -10,7 +10,62 @@ ESP8266WebServer server(80);
 const int ledPin = D4; // Built-in LED pin
 
 void handleRoot() {
-  server.send(200, "text/html", "<h1>Hello from NodeMCU!</h1>");
+  // HTML content to be served
+  String htmlPage = "<!DOCTYPE html>\
+<html lang=\"en\">\
+<head>\
+  <meta charset=\"UTF-8\">\
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\
+  <title>ESP8266 LED Control</title>\
+  <style>\
+    body {\
+      font-family: Arial, sans-serif;\
+      text-align: center;\
+      margin-top: 50px;\
+    }\
+    h1 {\
+      color: #333;\
+    }\
+    .button {\
+      display: inline-block;\
+      padding: 15px 25px;\
+      font-size: 20px;\
+      cursor: pointer;\
+      text-align: center;\
+      text-decoration: none;\
+      outline: none;\
+      color: #fff;\
+      background-color: #4CAF50;\
+      border: none;\
+      border-radius: 15px;\
+      box-shadow: 0 9px #999;\
+      margin: 20px;\
+    }\
+    .button:hover {\
+      background-color: #3e8e41;\
+    }\
+    .button:active {\
+      background-color: #3e8e41;\
+      box-shadow: 0 5px #666;\
+      transform: translateY(4px);\
+    }\
+    #ledStatus {\
+      margin-top: 30px;\
+      font-size: 24px;\
+      color: #555;\
+    }\
+  </style>\
+</head>\
+<body>\
+  <h1>LED Control</h1>\
+  <button class=\"button\" onclick=\"location.href='/led/on'\">Turn ON</button>\
+  <button class=\"button\" onclick=\"location.href='/led/off'\">Turn OFF</button>\
+  <div id=\"ledStatus\">LED is OFF</div>\
+</body>\
+</html>";
+
+  // Send the HTML content
+  server.send(200, "text/html", htmlPage);
 }
 
 void handleLEDOn() {
@@ -53,3 +108,4 @@ void setup() {
 void loop() {
   server.handleClient();
 }
+
